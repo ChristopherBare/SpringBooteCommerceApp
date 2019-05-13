@@ -14,15 +14,17 @@ public class Product {
     private int id;
     private double price;
     private int quantity, rating;
-    private String description, name, brand;
+    private String description, name, brand, image;
 
-    public Product(double price, int quantity, String description, String name, String brand, int rating) {
+    public Product(double price, int quantity, String description, String name,
+                   String brand, int rating, String image) {
         this.price = price;
         this.quantity = quantity;
         this.description = description;
         this.name = name;
         this.brand = brand;
         this.rating = rating;
+        this.image = image;
     }
 
     public Product() {}
@@ -33,6 +35,14 @@ public class Product {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public double getPrice() {
