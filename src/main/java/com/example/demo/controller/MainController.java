@@ -42,8 +42,9 @@ public class MainController {
         String brand = (String) body.get("brand");
         int rating = (Integer) body.get("rating");
         String image = (String) body.get("image");
+        String category = (String) body.get("category");
 
-        return productRepository.save(new Product(price, quantity, description, name, brand, rating, image));
+        return productRepository.save(new Product(price, quantity, description, name, brand, rating, image, category));
     }
 
     @PostMapping("/Product/{id}")

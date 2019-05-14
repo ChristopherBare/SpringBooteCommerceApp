@@ -1,10 +1,7 @@
 package com.example.demo.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Product {
@@ -12,12 +9,16 @@ public class Product {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Category category;
     private double price;
     private int quantity, rating;
     private String description, name, brand, image;
 
     public Product(double price, int quantity, String description, String name,
-                   String brand, int rating, String image) {
+                   String brand, int rating, String image, String categoryName) {
         this.price = price;
         this.quantity = quantity;
         this.description = description;
@@ -25,6 +26,15 @@ public class Product {
         this.brand = brand;
         this.rating = rating;
         this.image = image;
+        this.category = new Category(categoryName);
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Product() {}
@@ -97,12 +107,14 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "id=" + id +
+                ", category=" + category +
                 ", price=" + price +
                 ", quantity=" + quantity +
+                ", rating=" + rating +
                 ", description='" + description + '\'' +
                 ", name='" + name + '\'' +
                 ", brand='" + brand + '\'' +
-                ", rating=" + rating +
+                ", image='" + image + '\'' +
                 '}';
     }
 }
