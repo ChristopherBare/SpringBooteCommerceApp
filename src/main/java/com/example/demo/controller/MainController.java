@@ -2,6 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Product;
 import com.example.demo.model.ProductRepository;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@Data
 @Controller
 public class MainController {
 
