@@ -1,8 +1,6 @@
 package com.example.demo.model;
 
-
 import lombok.*;
-
 import javax.persistence.*;
 
 
@@ -34,8 +32,6 @@ public class Product {
         this.image = image;
         this.category = new Category(categoryName);
     }
-
-
 }
 
 
