@@ -10,4 +10,6 @@ import javax.persistence.Id;
 @Data
 public class Orders {
 
+    @Id private String Id;
+
 }
