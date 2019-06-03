@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Product;
-import com.example.demo.model.ProductRepository;
+import com.example.demo.repositories.ProductRepository;
+import com.example.demo.services.interfaces.ProductService;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +16,12 @@ import java.util.Map;
 @Data
 @Controller
 public class MainController {
+
+
     @Autowired
-    ProductRepository productRepository;
+    ProductService productService;
+    //ProductRepository productRepository;      // Don't do this
+
 
     @GetMapping("/")
     public String main(Model model) {
@@ -51,13 +54,13 @@ public class MainController {
 
     @GetMapping("/Product")
     public List<Product> index() {
-        return productRepository.findAll();
+        return productService.getAllProducts();
     }
 
     @GetMapping("/Product/{id}")
     public Product show(@PathVariable String id) {
         int productId = Integer.parseInt(id);
-        return productRepository.findById(productId).get();
+        return productService.getProductById(productId);
     }
 
     @PostMapping("/Product")
@@ -71,7 +74,7 @@ public class MainController {
         String image = (String) body.get("image");
         String category = (String) body.get("category");
 
-        return productRepository.save(new Product(price, quantity, description, name, brand, rating, image, category));
+        return productService.saveProduct(new Product(price, quantity, description, name, brand, rating, image, category));
     }
 
     @PostMapping("/Product/{id}")
@@ -79,7 +82,7 @@ public class MainController {
         int productId = Integer.parseInt(id);
 
         //Get product
-        Product product = productRepository.findById(productId).get();
+        Product product = productService.getProductById(productId);
         double price = (Double) body.get("price");
         int quantity = (Integer) body.get("quantity");
         String description = (String) body.get("description");
@@ -96,12 +99,12 @@ public class MainController {
         product.setRating(rating);
         product.setImage(image);
 
-        return productRepository.save(product);
+        return productService.saveProduct(product);
     }
 
     @DeleteMapping("/Product/{id}")
-    public boolean delete(@PathVariable String id) {
-        productRepository.delete(show(id));
+    public boolean delete(@PathVariable int id) {
+        productService.deleteProductById(id);
         return true;
     }
 
