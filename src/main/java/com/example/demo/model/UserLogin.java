@@ -27,7 +27,6 @@ public class UserLogin implements Serializable {
     private int user_id;
 
     private @NotNull @Column(unique=true) String email;
-    private @NotNull @Column(unique=true) String username;
     private String password, salt;
 
     public UserLogin(User user) {
@@ -53,7 +52,6 @@ public class UserLogin implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = username;
         this.user.setEmail(email);
     }
 
