@@ -15,7 +15,7 @@ public class Product {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId", referencedColumnName = "Category", foreignKey = @ForeignKey(name = "FK_CategoryId"))
+    @JoinColumn(name = "categoryId", foreignKey = @ForeignKey(name = "FK_CategoryId"))
     private Category category;
     private double price;
     private int quantity, rating;

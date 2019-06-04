@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -19,7 +20,7 @@ public class User {
     int id;
     String email, encryptedPassword, resetPasswordToken, currentSignInIP,
             LastSignInIP, role, name, address, city, zip, state;
-    DateTimeFormat lastSignInAt, currentSignInAt, rememberCreatedAt;
+    LocalDateTime lastSignInAt, currentSignInAt, rememberCreatedAt;
     Date birthday;
 
     public User(String email, String encryptedPassword) {
