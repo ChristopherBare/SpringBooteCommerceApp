@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Product;
+import com.example.demo.model.User;
 import com.example.demo.repositories.ProductRepository;
 import com.example.demo.services.interfaces.ProductService;
 import lombok.Data;
@@ -46,67 +47,14 @@ public class MainController {
         products.add(C7OLED);
         products.add(MacbookPro);
 
-
+        ArrayList<User> users = new ArrayList<>();
+        User admin = new User("admin@admin.com", "root", "admin", "admin");
+        users.add(admin);
         model.addAttribute(products);
+        model.addAttribute(users);
 
         return "main";
     }
-
-//    @GetMapping("/Product")
-//    public List<Product> index() {
-//        return productService.getAllProducts();
-//    }
-//
-//    @GetMapping("/Product/{id}")
-//    public Product show(@PathVariable String id) {
-//        int productId = Integer.parseInt(id);
-//        return productService.getProductById(productId);
-//    }
-//
-//    @PostMapping("/Product")
-//    public Product create(@RequestBody Map<String, ?> body) {
-//        double price = (Double) body.get("price");
-//        int quantity = (Integer) body.get("quantity");
-//        String description = (String) body.get("description");
-//        String name = (String) body.get("name");
-//        String brand = (String) body.get("brand");
-//        int rating = (Integer) body.get("rating");
-//        String image = (String) body.get("image");
-//        String category = (String) body.get("category");
-//
-//        return productService.saveProduct(new Product(price, quantity, description, name, brand, rating, image, category));
-//    }
-//
-//    @PostMapping("/Product/{id}")
-//    public Product update(@PathVariable String id, @RequestBody Map<String, ?> body) {
-//        int productId = Integer.parseInt(id);
-//
-//        //Get product
-//        Product product = productService.getProductById(productId);
-//        double price = (Double) body.get("price");
-//        int quantity = (Integer) body.get("quantity");
-//        String description = (String) body.get("description");
-//        String name = (String) body.get("name");
-//        String brand = (String) body.get("brand");
-//        int rating = (Integer) body.get("rating");
-//        String image = (String) body.get("image");
-//
-//        product.setPrice(price);
-//        product.setQuantity(quantity);
-//        product.setDescription(description);
-//        product.setName(name);
-//        product.setBrand(brand);
-//        product.setRating(rating);
-//        product.setImage(image);
-//
-//        return productService.saveProduct(product);
-//    }
-//
-//    @DeleteMapping("/Product/{id}")
-//    public boolean delete(@PathVariable int id) {
-//        productService.deleteProductById(id);
-//        return true;
-//    }
 
 
 }

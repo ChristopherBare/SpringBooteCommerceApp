@@ -2,13 +2,14 @@ package com.example.demo.model;
 
 import lombok.*;
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Data
-public class Product {
+public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

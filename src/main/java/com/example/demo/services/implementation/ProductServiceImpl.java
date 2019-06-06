@@ -17,7 +17,8 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     // Initializes repository reference
-    public ProductServiceImpl(ProductRepository productRepository) { this.productRepository = productRepository; }
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository; }
 
 
     // ===== Examples of service method implementations ===== //

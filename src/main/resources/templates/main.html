@@ -25,55 +25,12 @@
 
 <!--        thymeleaf loop for the products-->
         <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" th:src="@{/image/1/iphonexfrontback-800x573.jpg}" style="width: 100%;height: 250px;object-fit: cover;" alt="Card image cap">
+            <div class="col-md-3" th:each="product : ${productList}">
+                <div class="card" >
+                    <img class="card-img-top" th:src="@{${product.getImage()}}" style="width: 100%;height: 250px;object-fit: cover;" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">iPhone X</h5>
-                        <p class="card-text">Buy It. </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-        <!-- Example row of columns -->
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" th:src="@{/image/1/iphonexfrontback-800x573.jpg}" style="width: 100%;height: 250px;object-fit: cover;" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">iPhone X</h5>
-                        <p class="card-text">Buy It. </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" th:src="@{/image/2/iphone8-silver-select-2017.jpg}" style="width: 100%;height: 250px;object-fit: cover;" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">iPhone 8 Silver</h5>
-                        <p class="card-text">It's old.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" th:src="@{/image/3/C7_ST_Desktop_Front.jpg}" style="width: 100%;height: 250px;object-fit: cover;" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">LG C7 4K TV</h5>
-                        <p class="card-text">Watch the TV.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" th:src="@{/image/4/apple_mlh32ll_a_15_4_macbook_pro_with_1293726.jpg}"
-                         style="width: 100%;height: 250px;object-fit: cover; " alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Macbook pro 15" with Touchbar</h5>
-                        <p class="card-text">How 'bout that touch bar?</p>
+                        <h5 class="card-title" th:text="${product.getName()}"></h5>
+                        <p class="card-text" th:text="${product.getDescription()}"></p>
                         <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
