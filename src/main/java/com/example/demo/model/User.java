@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -19,7 +18,7 @@ import java.util.Date;
 @Data
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     int id;
     String email, password, salt, role, name, address, city, zip, state;
     Date birthday;

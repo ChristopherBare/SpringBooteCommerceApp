@@ -12,11 +12,12 @@ import java.io.Serializable;
 public class Product implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId", foreignKey = @ForeignKey(name = "FK_CategoryId"))
+    @JoinColumn(name = "categoryId", referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_CategoryId"))
     private Category category;
     private double price;
     private int quantity, rating;
@@ -31,7 +32,7 @@ public class Product implements Serializable {
         this.brand = brand;
         this.rating = rating;
         this.image = image;
-        this.category = new Category(categoryName);
+        this.category = new Category(categoryName, this);
     }
 }
 
