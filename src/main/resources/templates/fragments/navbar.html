@@ -24,6 +24,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Find By Brand</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01" >
+                        <!--/*@thymesVar id="brands" type=""*/-->
                         <a class="dropdown-item" th:each="brand : ${brands}" th:text="${brand.toString()}" th:href="@{/sortByBrand}" th:object="${brand.toString()}"></a>
                     </div>
                 </li>
