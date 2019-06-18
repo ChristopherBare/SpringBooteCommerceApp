@@ -77,20 +77,27 @@ public class MainController {
     public String sortProductsByCategory(@PathVariable String category,
                                          @ModelAttribute(name="products")
                                                  ArrayList<Product> products) {
+        if (category.equals("All")){
+            return "redirect:/";
+        } else {
         for (Product product : products) {
             if(!product.getCategory().getName().equals(category)) products.remove(product);
         }
-        return "main";
+        return "redirect:/sortByCategory/{category}";}
     }
 
-    @RequestMapping(value = "/sortByBrand", method = RequestMethod.GET)
-    public String sortProductsByBrand(@ModelAttribute(value = "brand") String brand,
-                                      @ModelAttribute ArrayList<Product> products) {
+    @RequestMapping(value = "/sortByBrand/{brand}", method = RequestMethod.GET)
+    public String sortProductsByBrand(@PathVariable String brand,
+                                      @ModelAttribute(name="products")
+                                              ArrayList<Product> products) {
+        if (brand.equals("All")){
+            return "redirect:/";
+        } else {
         for (Product product : products) {
             if (!product.getBrand().equals(brand)) {
                 products.remove(product);
             }
         }
-        return "main";
+        return "redirect:/sortByBrand/{brand}";}
     }
 }

@@ -2,6 +2,7 @@ package com.example.demo.Util;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -12,7 +13,7 @@ public class Hash {
 
     public static String SHA_256(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         return DatatypeConverter.printHexBinary(
-                MessageDigest.getInstance("SHA-256").digest(text.getBytes("UTF-8")));
+                MessageDigest.getInstance("SHA-256").digest(text.getBytes(StandardCharsets.UTF_8)));
     }
 
     public static String getNewSalt() {
