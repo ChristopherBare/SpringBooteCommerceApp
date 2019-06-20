@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Data
@@ -73,16 +74,24 @@ public class MainController {
     }
 
     @RequestMapping(value = "/sortByCategory/{category}", method = RequestMethod.GET)
-    public Stream<Product> sortProductsByCategory(@PathVariable String category,
+    public ArrayList<Product> sortProductsByCategory(@PathVariable String category,
                                                   @ModelAttribute(name="products")
                                                  ArrayList<Product> products) {
-        return products.stream().filter(x -> x.getCategory().toString().equals(category));
+        return (ArrayList<Product>) products.stream().filter(x ->
+                x.getCategory()
+                .toString()
+                .equals(category))
+                .collect(Collectors.toList());
+
     }
 
     @RequestMapping(value = "/sortByBrand/{brand}", method = RequestMethod.GET)
-    public Stream<Product> sortProductsByBrand(@PathVariable String brand,
+    public ArrayList<Product> sortProductsByBrand(@PathVariable String brand,
                                                @ModelAttribute(name="products")
                                               ArrayList<Product> products) {
-        return products.stream().filter(x -> x.getBrand().equals(brand));
+        return (ArrayList<Product>) products.stream().filter(x ->
+                x.getBrand()
+                .equals(brand))
+                .collect(Collectors.toList());
     }
 }
