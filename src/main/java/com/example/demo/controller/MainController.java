@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
+import com.example.demo.repositories.ProductRepository;
 import com.example.demo.services.interfaces.ProductService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class MainController {
 
     @Autowired
     ProductService productService;
+
+    ProductRepository productRepository;
 
 
     @GetMapping("/")
@@ -74,24 +77,31 @@ public class MainController {
     }
 
     @RequestMapping(value = "/sortByCategory/{category}", method = RequestMethod.GET)
-    public ArrayList<Product> sortProductsByCategory(@PathVariable String category,
-                                                  @ModelAttribute(name="products")
-                                                 ArrayList<Product> products) {
-        return (ArrayList<Product>) products.stream().filter(x ->
+    public String sortProductsByCategory(@PathVariable String category,
+                                                  Model model) {
+        ArrayList<Product> productList = (ArrayList<Product>) productService.getAllProducts();
+        if (category.equals("All")) { return "main"; } else {
+            ArrayList<Product> sortedProductList = productList.stream().filter(x ->
                 x.getCategory()
-                .toString()
-                .equals(category))
-                .collect(Collectors.toList());
-
+                        .toString()
+                        .equals(category)).collect(Collectors.toCollection(ArrayList::new));
+        model.addAttribute(sortedProductList);}
+        return "sort";
     }
 
     @RequestMapping(value = "/sortByBrand/{brand}", method = RequestMethod.GET)
-    public ArrayList<Product> sortProductsByBrand(@PathVariable String brand,
-                                               @ModelAttribute(name="products")
-                                              ArrayList<Product> products) {
-        return (ArrayList<Product>) products.stream().filter(x ->
-                x.getBrand()
-                .equals(brand))
-                .collect(Collectors.toList());
+    public String sortProductsByBrand(@PathVariable String brand,
+                                               Model model) {
+        ArrayList<Product> productList = (ArrayList<Product>) productService.getAllProducts();
+        if (brand.equals("All")) { return "main"; } else {
+            ArrayList<Product> sortedProductList = productList.stream().filter(x ->
+                    x.getBrand()
+                        .equals(brand))
+                        .collect(Collectors.toCollection(ArrayList::new));
+            model.addAttribute(sortedProductList);}
+        return "sort";
+
     }
+
+
 }
