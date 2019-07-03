@@ -1,11 +1,10 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <div th:fragment="navbar(products, brands, categories)">
 
     <nav class="navbar navbar-expand-md navbar-default navbar-light bg-light">
-        <a class="navbar-brand" href="#">Tech Talent Store</a>
+        <a class="navbar-brand" href="/">Tech Talent Store</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -17,15 +16,14 @@
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Find By Category</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01" >
-                        <a class="dropdown-item" th:each="category : ${categories}" th:text="${category.getName()}" th:object="${category}" id="category" ></a>
+                        <a class="dropdown-item" th:each="category : ${categories}" th:text="${category.getName()}" th:object="${category}" id="category" th:href="@{|/sortByCategory/${category}|}"></a>
 
                     </div>
                 </li><li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Find By Brand</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01" >
-                        <!--/*@thymesVar id="brands" type=""*/-->
-                        <a class="dropdown-item" th:each="brand : ${brands}" th:text="${brand.toString()}" ></a>
+                        <a class="dropdown-item" th:each="brand : ${brands}" th:text="${brand.toString()}" th:href="@{|/sortByBrand/${brand}|}"></a>
                     </div>
                 </li>
             </ul>

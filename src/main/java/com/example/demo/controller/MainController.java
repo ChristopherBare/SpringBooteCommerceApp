@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Controller
 public class MainController {
     ArrayList<User> users = new ArrayList<>();
+    ArrayList<Product> products = new ArrayList<>();
 
     @Autowired
     ProductService productService;
@@ -35,25 +36,32 @@ public class MainController {
         return "main";
     }
 
-    @ModelAttribute("products")
-    public ArrayList<Product> products() {
+    private void init() {
         Product iPhoneX = new Product(999.00, 9999, "64GB, iOS 11, space gray",
-                "iPhone X", "Apple", 5,
-                "/image/1/iphonexfrontback-800x573.jpg", "Smart Phones");
+            "iPhone X", "Apple", 5,
+            "/image/1/iphonexfrontback-800x573.jpg", "Smart Phones");
         Product iPhone8 = new Product(799.00, 9999, "64GB, iOS 11, Silver",
-                "iPhone 8", "Apple", 5,
-                "/image/2/iphone8-silver-select-2017.jpg", "Smart Phones");
+            "iPhone 8", "Apple", 5,
+            "/image/2/iphone8-silver-select-2017.jpg", "Smart Phones");
         Product C7OLED = new Product(3000.00, 9999, "65\" Smart TV",
-                "C7 OLED", "LG", 5,
-                "/image/3/C7_ST_Desktop_Front.jpg", "Televisions");
+            "C7 OLED", "LG", 5,
+            "/image/3/C7_ST_Desktop_Front.jpg", "Televisions");
         Product MacbookPro = new Product(2800.00, 15000, "15\" laptop, 512GB SSD",
-                "Macbook Pro", "Apple", 5,
-                "/image/4/apple_mlh32ll_a_15_4_macbook_pro_with_1293726.jpg", "Computers");
-        ArrayList<Product> products = new ArrayList<>();
+            "Macbook Pro", "Apple", 5,
+            "/image/4/apple_mlh32ll_a_15_4_macbook_pro_with_1293726.jpg", "Computers");
         products.add(iPhoneX);
         products.add(iPhone8);
         products.add(C7OLED);
         products.add(MacbookPro);
+        productService.saveProduct(iPhoneX);
+        productService.saveProduct(iPhone8);
+        productService.saveProduct(C7OLED);
+        productService.saveProduct(MacbookPro);
+    }
+
+    @ModelAttribute("products")
+    public ArrayList<Product> products() {
+        if(products.size() < 4) init();
         return products;
     }
 
@@ -79,12 +87,14 @@ public class MainController {
     public String sortProductsByCategory(@PathVariable String category,
                                                   Model model) {
         ArrayList<Product> productList = (ArrayList<Product>) productService.getAllProducts();
-        if(category.equals("All")) { return "main"; } else {
+        if(category.equals("All")) return "redirect:/";
+        else {
             ArrayList<Product> sortedProductList = productList.stream().filter(x ->
                 x.getCategory()
                         .toString()
                         .equals(category)).collect(Collectors.toCollection(ArrayList::new));
-        model.addAttribute("sorted", sortedProductList);}
+            model.addAttribute(sortedProductList);
+        }
         return "sort";
     }
 
@@ -92,12 +102,14 @@ public class MainController {
     public String sortProductsByBrand(@PathVariable String brand,
                                                Model model) {
         ArrayList<Product> productList = (ArrayList<Product>) productService.getAllProducts();
-        if (brand.equals("All")) { return "main"; } else {
+        if(brand.equals("All")) return "redirect:/";
+        else {
             ArrayList<Product> sortedProductList = productList.stream().filter(x ->
                     x.getBrand()
                         .equals(brand))
                         .collect(Collectors.toCollection(ArrayList::new));
-            model.addAttribute(sortedProductList);}
+            model.addAttribute(sortedProductList);
+        }
         return "sort";
     }
 

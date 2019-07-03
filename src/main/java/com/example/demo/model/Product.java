@@ -15,7 +15,7 @@ public class Product implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "categoryId", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "FK_CategoryId"))
     private Category category;
