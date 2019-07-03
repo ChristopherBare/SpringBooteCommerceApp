@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Data
 @Controller
@@ -80,12 +79,12 @@ public class MainController {
     public String sortProductsByCategory(@PathVariable String category,
                                                   Model model) {
         ArrayList<Product> productList = (ArrayList<Product>) productService.getAllProducts();
-        if (category.equals("All")) { return "main"; } else {
+        if(category.equals("All")) { return "main"; } else {
             ArrayList<Product> sortedProductList = productList.stream().filter(x ->
                 x.getCategory()
                         .toString()
                         .equals(category)).collect(Collectors.toCollection(ArrayList::new));
-        model.addAttribute(sortedProductList);}
+        model.addAttribute("sorted", sortedProductList);}
         return "sort";
     }
 
@@ -100,7 +99,6 @@ public class MainController {
                         .collect(Collectors.toCollection(ArrayList::new));
             model.addAttribute(sortedProductList);}
         return "sort";
-
     }
 
 
