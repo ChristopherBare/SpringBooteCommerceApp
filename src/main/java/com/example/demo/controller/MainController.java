@@ -53,10 +53,10 @@ public class MainController {
         products.add(iPhone8);
         products.add(C7OLED);
         products.add(MacbookPro);
-        productService.saveProduct(iPhoneX);
-        productService.saveProduct(iPhone8);
-        productService.saveProduct(C7OLED);
-        productService.saveProduct(MacbookPro);
+        productService.save(iPhoneX);
+        productService.save(iPhone8);
+        productService.save(C7OLED);
+        productService.save(MacbookPro);
     }
 
     @ModelAttribute("products")
@@ -86,7 +86,7 @@ public class MainController {
     @RequestMapping(value = "/sortByCategory/{category}", method = RequestMethod.GET)
     public String sortProductsByCategory(@PathVariable String category,
                                                   Model model) {
-        ArrayList<Product> productList = (ArrayList<Product>) productService.getAllProducts();
+        ArrayList<Product> productList = (ArrayList<Product>) productService.findAll();
         if(category.equals("All")) return "redirect:/";
         else {
             ArrayList<Product> sortedProductList = productList.stream().filter(x ->
@@ -101,7 +101,7 @@ public class MainController {
     @RequestMapping(value = "/sortByBrand/{brand}", method = RequestMethod.GET)
     public String sortProductsByBrand(@PathVariable String brand,
                                                Model model) {
-        ArrayList<Product> productList = (ArrayList<Product>) productService.getAllProducts();
+        ArrayList<Product> productList = (ArrayList<Product>) productService.findAll();
         if(brand.equals("All")) return "redirect:/";
         else {
             ArrayList<Product> sortedProductList = productList.stream().filter(x ->

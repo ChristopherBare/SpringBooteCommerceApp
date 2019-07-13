@@ -34,6 +34,10 @@ public class Product implements Serializable {
         this.image = image;
         this.category = new Category(categoryName, this);
     }
+
+    public void setCategory(String category) {
+        this.category = new Category(category, this);
+    }
 }
 
 

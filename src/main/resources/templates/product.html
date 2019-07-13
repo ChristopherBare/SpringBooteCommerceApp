@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+</head>
+<body>
+<div th:include="fragments/navbar :: navbar(${productList}, ${brands}, ${categories})" ></div>
+
+<main role="main">
+    <div class="container">
+        <div class="row">
+            <img class="card-img-top" th:src="@{${product.getImage()}}" alt="Card image cap">
+            <div class="">
+                <h2 class="card-title" th:text="${product.getName()}"></h2>
+                <h4 class="card-text" th:text="${product.getDescription()}"></h4>
+                <a th:href="@{/cart/add}" th:action="post" th:object="${product}" class="btn btn-primary">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    </div> <!-- /container -->
+
+</main>
+<script src="jquery-3.4.1.min.js"></script>
+<div th:insert="fragments/footer :: footer"></div>
+
+</body>
+</html>
