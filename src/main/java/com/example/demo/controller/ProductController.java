@@ -2,9 +2,10 @@ package com.example.demo.controller;
 
 
 import com.example.demo.model.Product;
-import com.example.demo.repositories.ProductRepository;
+import com.example.demo.services.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,21 +15,45 @@ import java.util.Map;
 public class ProductController {
 
     @Autowired
-    ProductRepository productRepository;
+    ProductService productService;
 
     @GetMapping("/Product")
     public List<Product> index() {
-        return productRepository.findAll();
+        return productService.findAll();
     }
 
     @GetMapping("/Product/{id}")
-    public Product show(@PathVariable String id) {
+    public String show(@PathVariable String id, Model model) {
         int productId = Integer.parseInt(id);
-        return productRepository.findById(productId).get();
+        Product product = productService.findById(productId);
+        model.addAttribute(product);
+        return "product";
     }
 
     @PostMapping("/Product")
     public Product create(@RequestBody Map<String, ?> body) {
+        return productService.save(newProductFromResponse(body));
+    }
+
+    @PostMapping("/Product/{id}")
+    public Product update(@PathVariable String id, @RequestBody Map<String, ?> body) {
+        int productId = Integer.parseInt(id);
+
+        //Get product
+        Product product = productService.findById(productId);
+
+        updateProductFromResponse(product, body);
+
+        return productService.save(product);
+    }
+
+    @DeleteMapping("/Product/{id}")
+    public boolean delete(@PathVariable String id) {
+        productService.deleteById(Integer.parseInt(id));
+        return true;
+    }
+
+    private Product updateProductFromResponse(Product product, Map<String, ?> body) {
         double price = (Double) body.get("price");
         int quantity = (Integer) body.get("quantity");
         String description = (String) body.get("description");
@@ -38,24 +63,6 @@ public class ProductController {
         String image = (String) body.get("image");
         String category = (String) body.get("category");
 
-        return productRepository.save(new Product(price, quantity, description, name, brand, rating, image, category));
-    }
-
-    @PostMapping("/Product/{id}")
-    public Product update(@PathVariable String id, @RequestBody Map<String, ?> body) {
-        int productId = Integer.parseInt(id);
-
-        //Get product
-        Product product = productRepository.findById(productId).get();
-
-        double price = (Double) body.get("price");
-        int quantity = (Integer) body.get("quantity");
-        String description = (String) body.get("description");
-        String name = (String) body.get("name");
-        String brand = (String) body.get("brand");
-        int rating = (Integer) body.get("rating");
-        String image = (String) body.get("image");
-
         product.setPrice(price);
         product.setQuantity(quantity);
         product.setDescription(description);
@@ -63,14 +70,14 @@ public class ProductController {
         product.setBrand(brand);
         product.setRating(rating);
         product.setImage(image);
+        product.setCategory(category);
 
-        return productRepository.save(product);
+        return product;
     }
 
-    @DeleteMapping("/Product/{id}")
-    public boolean delete(@PathVariable String id) {
-        productRepository.delete(show(id));
-        return true;
+    private  Product newProductFromResponse(Map<String, ?> body) {
+        return updateProductFromResponse(new Product(), body);
     }
+
 
 }

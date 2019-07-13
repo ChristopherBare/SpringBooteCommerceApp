@@ -23,27 +23,27 @@ public class ProductServiceImpl implements ProductService {
 
     // ===== Examples of service method implementations ===== //
     @Override
-    public Product getProductById(int id) {
+    public Product findById(int id) {
         return productRepository.findProductById(id);
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
 
     @Override
-    public Product saveProduct(Product product) {
+    public Product save(Product product) {
         return productRepository.save(product);
     }
 
     @Override
-    public void deleteProductById(int id) {
+    public void deleteById(int id) {
         productRepository.deleteProductById(id);
     }
 
     @Override
-    public void deleteProduct(Product product) {
+    public void delete(Product product) {
         productRepository.delete(product);
     }
 }
