@@ -17,25 +17,26 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/Product")
+    @GetMapping("/product")
     public List<Product> index() {
         return productService.findAll();
     }
 
-    @GetMapping("/Product/{id}")
+    @GetMapping("/product/{id}")
     public String show(@PathVariable String id, Model model) {
         int productId = Integer.parseInt(id);
         Product product = productService.findById(productId);
+        System.out.println(product);
         model.addAttribute(product);
         return "product";
     }
 
-    @PostMapping("/Product")
+    @PostMapping("/product")
     public Product create(@RequestBody Map<String, ?> body) {
         return productService.save(newProductFromResponse(body));
     }
 
-    @PostMapping("/Product/{id}")
+    @PostMapping("/product/{id}")
     public Product update(@PathVariable String id, @RequestBody Map<String, ?> body) {
         int productId = Integer.parseInt(id);
 
@@ -47,7 +48,7 @@ public class ProductController {
         return productService.save(product);
     }
 
-    @DeleteMapping("/Product/{id}")
+    @DeleteMapping("/product/{id}")
     public boolean delete(@PathVariable String id) {
         productService.deleteById(Integer.parseInt(id));
         return true;

@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${product.getName()}"></h5>
                         <p class="card-text" th:text="${product.getDescription()}"></p>
-                        <a href="#" class="btn btn-primary">More Info</a>
+                        <a th:href="@{|/product/${product.getId()}|}" class="btn btn-primary">More Info</a>
                     </div>
                 </div>
             </div>

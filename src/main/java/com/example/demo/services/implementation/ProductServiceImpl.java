@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
     // ===== Examples of service method implementations ===== //
     @Override
     public Product findById(int id) {
-        return productRepository.findProductById(id);
+        return productRepository.findById(id);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteById(int id) {
-        productRepository.deleteProductById(id);
+        productRepository.deleteById(id);
     }
 
     @Override
