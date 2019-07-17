@@ -23,7 +23,7 @@ public class UserController {
 	@GetMapping("/User/{id}")
 	public User show(@PathVariable String id) {
 		int userId = Integer.parseInt(id);
-		return userRepository.findById(userId).get();
+		return userRepository.findById(userId);
 	}
 
 	@PostMapping("/User")
@@ -45,7 +45,7 @@ public class UserController {
 	public User update(@PathVariable String id, @RequestBody Map<String, ?> body) throws NoSuchAlgorithmException {
 		int userId = Integer.parseInt(id);
 
-		User user = userRepository.findById(userId).get();
+		User user = userRepository.findById(userId);
 
 		String email = (String) body.get("email");
 		String password = (String) body.get("password");

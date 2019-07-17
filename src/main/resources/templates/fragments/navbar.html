@@ -1,8 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<div th:fragment="navbar(products, brands, categories)">
-
+<div th:fragment="navbar">
     <nav class="navbar navbar-expand-md navbar-default navbar-light bg-light">
         <a class="navbar-brand" href="/">Tech Talent Store</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -16,21 +15,26 @@
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Find By Category</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01" >
-                        <a class="dropdown-item" th:each="category : ${categories}" th:text="${category.getName()}" th:object="${category}" id="category" th:href="@{|/sortByCategory/${category}|}"></a>
-
+                        <!--/*@thymesVar id="categories" type="java.util.Set<com.example.demo.model.Category>"*/-->
+                        <a class="dropdown-item" id="category"
+                           th:each="category : ${categories}" th:text="${category}"
+                           th:href="@{|/sortByCategory/${category}|}"></a>
                     </div>
-                </li><li class="nav-item dropdown">
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Find By Brand</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01" >
-                        <a class="dropdown-item" th:each="brand : ${brands}" th:text="${brand.toString()}" th:href="@{|/sortByBrand/${brand}|}"></a>
+                        <!--/*@thymesVar id="brands" type="java.util.Set<java.lang.String>"*/-->
+                        <a class="dropdown-item" th:each="brand : ${brands}"
+                           th:text="${brand}" th:href="@{|/sortByBrand/${brand}|}"></a>
                     </div>
                 </li>
             </ul>
 
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">My Cart <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/cart">My Cart <span class="sr-only">(current)</span></a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -41,12 +45,8 @@
                         <a class="dropdown-item" href="#">Login</a>
                     </div>
                 </li>
-
             </ul>
-
-
         </div>
     </nav>
-
 </div>
 </html>

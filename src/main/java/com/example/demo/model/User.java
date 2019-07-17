@@ -2,15 +2,11 @@ package com.example.demo.model;
 
 import com.example.demo.Util.Hash;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,11 +14,14 @@ import java.util.Date;
 @Data
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String email, password, salt, role, name, address, city, zip, state;
     Date birthday;
-
+    
+    @ElementCollection
+    Map<Product, Integer> cart = new HashMap<>();
+    
     public User(String email, String password) throws NoSuchAlgorithmException {
         this.email = email;
         this.salt = Hash.getNewSalt();
@@ -70,7 +69,7 @@ public class User implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.setEmail(email);
+        this.email = email;
     }
 }
 

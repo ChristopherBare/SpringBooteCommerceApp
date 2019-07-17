@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Data
 @Controller
+@ControllerAdvice // This makes the `@ModelAttribute`s of this controller available to all controllers, for the navbar.
 public class MainController {
     ArrayList<User> users = new ArrayList<>();
     ArrayList<Product> products = new ArrayList<>();
@@ -24,8 +25,7 @@ public class MainController {
     ProductService productService;
 
     ProductRepository productRepository;
-
-
+    
     @GetMapping("/")
     public String main(Model model) {
         User admin = new User("admin@admin.com", "root", "admin", "admin");
@@ -58,6 +58,14 @@ public class MainController {
         productService.save(C7OLED);
         productService.save(MacbookPro);
     }
+    
+    // TODO: Change this to use the logged in user.
+//    private User user = new User();
+//
+//    @ModelAttribute("cart")
+//    public Map<Product, Integer> cart() {
+//        return user.getCart();
+//    }
 
     @ModelAttribute("products")
     public ArrayList<Product> products() {
@@ -83,9 +91,8 @@ public class MainController {
         return b;
     }
 
-    @RequestMapping(value = "/sortByCategory/{category}", method = RequestMethod.GET)
-    public String sortProductsByCategory(@PathVariable String category,
-                                                  Model model) {
+    @GetMapping("/sortByCategory/{category}")
+    public String sortProductsByCategory(@PathVariable String category, Model model) {
         ArrayList<Product> productList = (ArrayList<Product>) productService.findAll();
         if(category.equals("All")) return "redirect:/";
         else {
@@ -98,7 +105,7 @@ public class MainController {
         return "sort";
     }
 
-    @RequestMapping(value = "/sortByBrand/{brand}", method = RequestMethod.GET)
+    @GetMapping("/sortByBrand/{brand}")
     public String sortProductsByBrand(@PathVariable String brand,
                                                Model model) {
         ArrayList<Product> productList = (ArrayList<Product>) productService.findAll();
