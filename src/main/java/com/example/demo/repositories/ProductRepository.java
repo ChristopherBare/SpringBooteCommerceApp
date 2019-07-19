@@ -1,21 +1,25 @@
 package com.example.demo.repositories;
 
-import com.example.demo.model.Category;
 import com.example.demo.model.Product;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 
 // https://www.baeldung.com/spring-data-jpa-query
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Integer> {
-    Product findById(int id);
-    void deleteById(int id);
+    Product findById(long id);
+    void deleteById(long id);
+    List<Product> findByBrand(String brand);
+    List<Product> findByCategory(String category);
+    List<Product> findByBrandAndCategory(String brand, String category);
     List<Product> findAll();
+    
+    @Query("SELECT DISTINCT p.brand FROM Product p")
+    List<String> findDistinctBrands();
+    
+    @Query("SELECT DISTINCT p.category FROM Product p")
+    List<String> findDistinctCategories();
 }

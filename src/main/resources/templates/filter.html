@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<div th:include="fragments/navbar :: navbar(${productList}, ${brands}, ${categories})" ></div>
+<div th:include="fragments/navbar :: navbar" ></div>
 
 <main role="main">
 
@@ -27,7 +27,7 @@
 
         <!--        thymeleaf loop for the products-->
         <div class="row">
-            <div class="col-md-3" th:each="product : ${productList}">
+            <div class="col-md-3" th:each="product : ${filtered}">
                 <div class="card" >
                     <img class="card-img-top" th:src="@{${product.getImage()}}" style="width: 100%;height: 220px;object-fit: cover;" alt="Card image cap">
                     <div class="card-body">
@@ -38,12 +38,7 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-
-
-    </div> <!-- /container -->
 
 </main>
 <script src="jquery-3.4.1.min.js"></script>
