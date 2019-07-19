@@ -1,41 +1,32 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Category;
 import com.example.demo.model.Product;
-import com.example.demo.model.User;
-import com.example.demo.repositories.ProductRepository;
-import com.example.demo.services.interfaces.ProductService;
+import com.example.demo.services.implementation.ProductService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Data
 @Controller
+@ControllerAdvice
 public class MainController {
-    ArrayList<User> users = new ArrayList<>();
-    ArrayList<Product> products = new ArrayList<>();
-
     @Autowired
     ProductService productService;
-
-    ProductRepository productRepository;
-
-
+    
     @GetMapping("/")
-    public String main(Model model) {
-        User admin = new User("admin@admin.com", "root", "admin", "admin");
-        users.add(admin);
-
-        model.addAttribute(users);
-
+    public String main() {
         return "main";
     }
 
+    @PostConstruct
     private void init() {
         Product iPhoneX = new Product(999.00, 9999, "64GB, iOS 11, space gray",
             "iPhone X", "Apple", 5,
@@ -49,10 +40,6 @@ public class MainController {
         Product MacbookPro = new Product(2800.00, 15000, "15\" laptop, 512GB SSD",
             "Macbook Pro", "Apple", 5,
             "/image/4/apple_mlh32ll_a_15_4_macbook_pro_with_1293726.jpg", "Computers");
-        products.add(iPhoneX);
-        products.add(iPhone8);
-        products.add(C7OLED);
-        products.add(MacbookPro);
         productService.save(iPhoneX);
         productService.save(iPhone8);
         productService.save(C7OLED);
@@ -60,58 +47,26 @@ public class MainController {
     }
 
     @ModelAttribute("products")
-    public ArrayList<Product> products() {
-        if(products.size() < 4) init();
-        return products;
+    public List<Product> products() {
+        return productService.findAll();
     }
 
     @ModelAttribute("categories")
-    public Set<Category> categories() {
-        LinkedHashSet<Category> c = new LinkedHashSet<>();
-        c.add(new Category("All"));
-        for(Product product : products())
-            c.add(product.getCategory());
-        return c;
+    public List<String> categories() {
+        return productService.findDistinctCategories();
     }
 
     @ModelAttribute("brands")
-    public Set<String> brands() {
-        LinkedHashSet<String> b = new LinkedHashSet<>();
-        b.add("All");
-        for (Product product : products())
-            b.add(product.getBrand());
-        return b;
+    public List<String> brands() {
+        return productService.findDistinctBrands();
     }
 
-    @RequestMapping(value = "/sortByCategory/{category}", method = RequestMethod.GET)
-    public String sortProductsByCategory(@PathVariable String category,
-                                                  Model model) {
-        ArrayList<Product> productList = (ArrayList<Product>) productService.findAll();
-        if(category.equals("All")) return "redirect:/";
-        else {
-            ArrayList<Product> sortedProductList = productList.stream().filter(x ->
-                x.getCategory()
-                        .toString()
-                        .equals(category)).collect(Collectors.toCollection(ArrayList::new));
-            model.addAttribute(sortedProductList);
-        }
-        return "sort";
+    @GetMapping("/filter")
+    public String filter(@RequestParam(required = false) String category,
+                         @RequestParam(required = false) String brand,
+                         Model model) {
+        List<Product> filtered = productService.findByBrandAndOrCategory(brand, category);
+        model.addAttribute("filtered", filtered);
+        return "filter";
     }
-
-    @RequestMapping(value = "/sortByBrand/{brand}", method = RequestMethod.GET)
-    public String sortProductsByBrand(@PathVariable String brand,
-                                               Model model) {
-        ArrayList<Product> productList = (ArrayList<Product>) productService.findAll();
-        if(brand.equals("All")) return "redirect:/";
-        else {
-            ArrayList<Product> sortedProductList = productList.stream().filter(x ->
-                    x.getBrand()
-                        .equals(brand))
-                        .collect(Collectors.toCollection(ArrayList::new));
-            model.addAttribute(sortedProductList);
-        }
-        return "sort";
-    }
-
-
 }

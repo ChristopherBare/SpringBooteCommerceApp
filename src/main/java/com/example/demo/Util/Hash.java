@@ -27,6 +27,10 @@ public class Hash {
             throws NoSuchAlgorithmException {
         return hashString(password + salt);
     }
+    
+    public static String hashAndSalt(String password) throws NoSuchAlgorithmException {
+        return hashString(password + getNewSalt());
+    }
 
     public static String hashString(String password)
             throws NoSuchAlgorithmException {

@@ -1,7 +1,13 @@
 package com.example.demo.model;
 
-import lombok.*;
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 
@@ -10,21 +16,16 @@ import java.io.Serializable;
 @Entity
 @Data
 public class Product implements Serializable {
-
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "categoryId", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_CategoryId"))
-    private Category category;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    
     private double price;
     private int quantity, rating;
-    private String description, name, brand, image;
+    private String description, name, brand, category, image;
 
     public Product(double price, int quantity, String description, String name,
-                   String brand, int rating, String image, String categoryName) {
+                   String brand, int rating, String image, String category) {
         this.price = price;
         this.quantity = quantity;
         this.description = description;
@@ -32,11 +33,7 @@ public class Product implements Serializable {
         this.brand = brand;
         this.rating = rating;
         this.image = image;
-        this.category = new Category(categoryName, this);
-    }
-
-    public void setCategory(String category) {
-        this.category = new Category(category, this);
+        this.category = category;
     }
 }
 
