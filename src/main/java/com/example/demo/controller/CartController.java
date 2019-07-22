@@ -1,12 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Product;
-import com.example.demo.model.User;
-import com.example.demo.repositories.UserRepository;
-import com.example.demo.services.interfaces.ProductService;
+import com.example.demo.service.ProductService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -17,14 +15,16 @@ public class CartController {
 	ProductService productService;
 	
 	@Autowired
-	UserRepository userRepository;
-	
-	// TODO: Change this to use the logged in user.
-	private User user = new User();
+	UserService userService;
 	
 	@ModelAttribute("cart")
-	public Map<Product, Integer> cart() {
-		return user.getCart();
+	public Map<Long, Integer> cart() {
+		return userService.getLoggedInUser().getCart();
+	}
+	
+	@ModelAttribute("productService")
+	public ProductService productService() {
+		return productService;
 	}
 	
 	@GetMapping("/cart")
@@ -33,32 +33,29 @@ public class CartController {
 	}
 	
 	@PostMapping("/cart")
-	public String addToCart(@RequestParam int id) {
-		Product product = productService.findById(id);
-		setQuantity(product, user.getCart().getOrDefault(product, 0) + 1);
+	public String addToCart(@RequestParam long id) {
+		setQuantity(id, cart().getOrDefault(id, 0) + 1);
 		return "cart";
 	}
 	
 	@PatchMapping("/cart")
-	public String updateQuantities(@RequestParam int[] id, @RequestParam int[] quantity) {
+	public String updateQuantities(@RequestParam long[] id, @RequestParam int[] quantity) {
 		for(int i = 0; i < id.length; i++) {
-			Product product = productService.findById(id[i]);
-			setQuantity(product, quantity[i]);
+			setQuantity(id[i], quantity[i]);
 		}
 		return "cart";
 	}
 	
 	@DeleteMapping("/cart")
-	public String removeFromCart(@RequestParam int id) {
-		Product product = productService.findById(id);
-		setQuantity(product, 0);
+	public String removeFromCart(@RequestParam long id) {
+		setQuantity(id, 0);
 		return "cart";
 	}
 	
-	private void setQuantity(Product product, int quantity) {
+	private void setQuantity(long id, int quantity) {
 		if(quantity > 0)
-			user.getCart().put(product, quantity);
+			cart().put(id, quantity);
 		else
-			user.getCart().remove(product);
+			cart().remove(id);
 	}
 }

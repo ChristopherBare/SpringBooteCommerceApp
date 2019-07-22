@@ -20,6 +20,9 @@ import java.util.List;
 public class MainController {
     @Autowired
     ProductService productService;
+    
+    @Autowired
+    CartController cartController;
 
     @GetMapping("/")
     public String main() {
@@ -29,17 +32,17 @@ public class MainController {
     @PostConstruct
     private void init() {
         Product iPhoneX = new Product(9999, 999.0, "64GB, iOS 11, space gray",
-            "iPhone X", "Apple",
-            "/image/1/iphonexfrontback-800x573.jpg", "Smart Phones");
+            "iPhone X", "Apple", "Smart Phones",
+            "/image/1/iphonexfrontback-800x573.jpg");
         Product iPhone8 = new Product(9999, 799.0, "64GB, iOS 11, Silver",
-            "iPhone 8", "Apple",
-            "/image/2/iphone8-silver-select-2017.jpg", "Smart Phones");
+            "iPhone 8", "Apple", "Smart Phones",
+            "/image/2/iphone8-silver-select-2017.jpg");
         Product C7OLED = new Product(9999, 3000.00, "65\" Smart TV",
-            "C7 OLED", "LG",
-            "/image/3/C7_ST_Desktop_Front.jpg", "Televisions");
+            "C7 OLED", "LG", "Televisions",
+            "/image/3/C7_ST_Desktop_Front.jpg");
         Product MacbookPro = new Product(15000, 2800.00, "15\" laptop, 512GB SSD",
-            "Macbook Pro", "Apple",
-            "/image/4/apple_mlh32ll_a_15_4_macbook_pro_with_1293726.jpg", "Computers");
+            "Macbook Pro", "Apple", "Computers",
+            "/image/4/apple_mlh32ll_a_15_4_macbook_pro_with_1293726.jpg");
         productService.save(iPhoneX);
         productService.save(iPhone8);
         productService.save(C7OLED);
