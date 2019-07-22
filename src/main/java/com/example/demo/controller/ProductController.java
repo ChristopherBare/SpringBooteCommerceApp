@@ -21,25 +21,17 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public String show(@PathVariable String id, Model model) {
-        int productId = Integer.parseInt(id);
-        Product product = productService.findById(productId);
-        System.out.println(product);
+    public String show(@PathVariable int id, Model model) {
+        Product product = productService.findById(id);
         model.addAttribute(product);
         return "product";
     }
 
     // TODO: Either implement admin controls or remove these methods.
-    
+
     @RequestMapping(value = "/product", method = {RequestMethod.POST, RequestMethod.PUT})
     public String createOrUpdate(@Valid Product product) {
         productService.save(product);
         return "redirect:/product/" + product.getId();
-    }
-
-    @DeleteMapping("/product/{id}")
-    public boolean delete(@PathVariable long id) {
-        productService.deleteById(id);
-        return true;
     }
 }

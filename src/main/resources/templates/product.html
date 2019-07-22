@@ -6,27 +6,27 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
 </head>
 <body>
 <div th:include="fragments/navbar :: navbar" ></div>
 
 <main role="main">
     <div class="container">
-        <img class="" th:src="@{${product.getImage()}}" style="height: 600px;" alt="Card image cap">
-        <br>
-        <br>
+        <img class="" th:src="@{${product.image}}" style="height: 600px;" alt="Card image cap">
+        <br />
+        <br />
         <div class="card">
-                <h4 class="card-header" th:text="${product.getName()}"></h4>
-                <div class="card-body">
-                    <h5 class="card-title" th:text="|$${product.getPrice()}|"></h5>
-                    <p class="card-text" th:text="${product.getDescription()}"></p>
-                    <a th:href="@{/cart/add}" th:action="post" th:object="${product}" class="btn btn-primary">Add to Cart</a>
-                </div>
+            <h4 class="card-header" th:text="${product.name}"></h4>
+            <div class="card-body">
+                <h5 class="card-title" th:text="|$${product.price}|"></h5>
+                <p class="card-text" th:text="${product.description}"></p>
+                <form th:action="@{/cart}" th:object="${product}" method="post">
+                    <input type="hidden" th:field="*{id}" />
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                </form>
             </div>
+        </div>
     </div>
-
 </main>
 <script src="jquery-3.4.1.min.js"></script>
 <div th:insert="fragments/footer :: footer"></div>

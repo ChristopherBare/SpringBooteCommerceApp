@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Cart</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+    <style>
+
+    </style>
+</head>
+<body>
+<div th:include="fragments/navbar :: navbar" ></div>
+
+<!--/*@thymesVar id="cart" type="java.util.Map<com.example.demo.model.Product, java.lang.Integer>"*/-->
+<main role="main">
+    <div class="container">
+        <div class="row">
+            <form th:action="@{/cart}" method="post">
+                <!-- form doesn't support PUT requests, but this tells Spring Boot to use @PutMapping anyway. -->
+                <input type="hidden" name="_method" value="PATCH" />
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Amount</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${cart}">
+                            <td th:text="${item.key.name}"></td>
+                            <td>
+                                <input type="hidden" name="id" th:value="${item.key.id}" />
+                                <input type="number" name="quantity" min="0" th:value="${item.value}" />
+                            </td>
+                            <td th:text="${#numbers.formatCurrency(item.key.price * item.value)}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary" th:if="${cart.size() > 0}">Update Cart</button>
+                <div th:if="${cart.size() == 0}">Nothing in your cart yet.</div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

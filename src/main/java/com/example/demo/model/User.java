@@ -16,9 +16,14 @@ import java.util.Map;
 @Entity
 public class User implements UserDetails {
 	@GeneratedValue
-	@Id private long id;
+	@Id
+	private long id;
 	
-	@NonNull private String username, password;
+	@NonNull
+	private String username, password;
+	
+	@ElementCollection
+	Map<Product, Integer> cart = new HashMap<>();
 	
 	// UserDetails requires these, they are technically getters (is-ers?) overridden by Lombok.
 	// @Transient Makes it so these aren't persisted in the database, as they are hard coded.
