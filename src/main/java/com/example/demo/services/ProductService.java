@@ -16,7 +16,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
     
-    public Product findById(int id) {
+    public Product findById(long id) {
         return productRepository.findById(id);
     }
 
@@ -48,7 +48,7 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         productRepository.deleteById(id);
     }
 
