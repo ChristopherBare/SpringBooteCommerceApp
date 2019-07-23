@@ -69,7 +69,7 @@ public class MainController {
                          @RequestParam(required = false) String brand,
                          Model model) {
         List<Product> filtered = productService.findByBrandAndOrCategory(brand, category);
-        model.addAttribute("filtered", filtered);
-        return "filter";
+        model.addAttribute("products", filtered);
+        return "main";
     }
 }

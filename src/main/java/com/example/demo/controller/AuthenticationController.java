@@ -31,7 +31,7 @@ class AuthenticationController {
 		if(userService.findByUsername(user.getUsername()) != null) {
 			return "registration";
 		}
-		userService.save(user);
+		userService.saveNew(user);
 		return "redirect:/cart";
 	}
 }
