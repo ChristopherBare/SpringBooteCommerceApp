@@ -69,4 +69,9 @@ public class MainController {
         model.addAttribute("filtered", filtered);
         return "filter";
     }
+
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
 }
