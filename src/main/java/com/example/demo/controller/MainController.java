@@ -29,6 +29,7 @@ public class MainController {
         return "main";
     }
 
+    // TODO: Get rid of this.
     @PostConstruct
     private void init() {
         Product iPhoneX = new Product(9999, 999.0, "64GB, iOS 11, space gray",
@@ -69,7 +70,7 @@ public class MainController {
                          @RequestParam(required = false) String brand,
                          Model model) {
         List<Product> filtered = productService.findByBrandAndOrCategory(brand, category);
-        model.addAttribute("products", filtered);
+        model.addAttribute("products", filtered); // Overrides the @ModelAttribute above.
         return "main";
     }
 }
