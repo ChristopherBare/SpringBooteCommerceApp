@@ -27,6 +27,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers("/cart").authenticated()
-			.and().formLogin().defaultSuccessUrl("/cart");
+			.and().formLogin().loginPage("/login").defaultSuccessUrl("/cart");
 	}
 }

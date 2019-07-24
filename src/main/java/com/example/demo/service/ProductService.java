@@ -1,12 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Product;
-<<<<<<< Updated upstream:src/main/java/com/example/demo/service/ProductService.java
 import com.example.demo.repository.ProductRepository;
-=======
-import com.example.demo.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> Stashed changes:src/main/java/com/example/demo/services/ProductService.java
 import org.springframework.stereotype.Service;
 
 import java.util.List;

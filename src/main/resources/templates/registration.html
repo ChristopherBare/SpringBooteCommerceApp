@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form th:action="@{/signup}" method="post">
-    <input type="text" name="username" />
-    <input type="password" name="password" />
-    <button type="submit">Submit</button>
-</form>
+<head th:replace="fragments :: head"></head>
+<body style="padding: 0">
+<div th:replace="fragments :: navbar" ></div>
+
+<main role="main">
+<div class="container">
+        <form class="form-signin" th:action="@{/signup}" method="post">
+            <h2 class="form-signin-heading" style="text-align: center">Sign Up</h2>
+            <p><input type="text" name="username" class="form-control" placeholder="Username"></p>
+            <p class="card-text"><input type="password" name="password" class="form-control" placeholder="Password"></p>
+            <input name="_csrf" type="hidden" value="f590da85-2a87-478c-b27b-a3e74f81593f">
+            <button class="btn btn-lg btn-success btn-block" type="submit">Register</button>
+        </form>
+</div>
+</main>
+
+<div th:replace="fragments :: footer"></div>
 </body>
 </html>

@@ -1,17 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <title>Cart</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-
-    <style>
-
-    </style>
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
-<div th:include="fragments/navbar :: navbar" ></div>
+<div th:replace="fragments :: navbar" ></div>
 
 <!--/*@thymesVar id="cart" type="java.util.Map<com.example.demo.model.Product, java.lang.Integer>"*/-->
 <main role="main">
@@ -55,7 +46,6 @@
     </div>
 </main>
 
-<script src="jquery-3.4.1.min.js"></script>
-<div th:insert="fragments/footer :: footer"></div>
+<div th:replace="fragments :: footer"></div>
 </body>
 </html>
