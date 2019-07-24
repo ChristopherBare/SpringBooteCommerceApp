@@ -11,14 +11,16 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Image</th>
                         <th>Item</th>
                         <th>Amount</th>
                         <th>Price</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="item : ${cart}" th:with="product=${productService.findById(item.key)}">
-
+                        <td style="width: 10%;"><img th:src="${product.image}" style="width: 100%; max-height: 80px"/></td>
                         <td th:text="${product.name}"></td>
                         <td>
                             <input type="hidden" name="id" th:value="${product.id}" form="updateForm" />
@@ -26,10 +28,12 @@
                         </td>
                         <td>
                             <span th:text="${#numbers.formatCurrency(product.price * item.value)}"></span>
-                            <form th:action="@{/cart}" method="post">
+                        </td>
+                        <td>
+                            <form th:action="@{/cart}" method="post" style="display: inline">
                                 <input type="hidden" name="_method" value="DELETE" />
                                 <input type="hidden" name="id" th:value="${product.id}" />
-                                <button type="submit">Remove</button>
+                                <button class="btn btn-danger" style="display: inline" type="submit">Delete</button>
                             </form>
                         </td>
                     </tr>
