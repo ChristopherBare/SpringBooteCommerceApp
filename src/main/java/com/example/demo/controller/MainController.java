@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Product;
-import com.example.demo.services.ProductService;
+import com.example.demo.service.ProductService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,30 +16,34 @@ import java.util.List;
 
 @Data
 @Controller
-@ControllerAdvice
+@ControllerAdvice // This makes the `@ModelAttribute`s of this controller available to all controllers, for the navbar.
 public class MainController {
     @Autowired
     ProductService productService;
     
+    @Autowired
+    CartController cartController;
+
     @GetMapping("/")
     public String main() {
         return "main";
     }
 
+    // TODO: Get rid of this.
     @PostConstruct
     private void init() {
         Product iPhoneX = new Product(9999, 999.0, "64GB, iOS 11, space gray",
-            "iPhone X", "Apple",
-            "/image/1/iphonexfrontback-800x573.jpg", "Smart Phones");
+                "iPhone X", "Apple", "Smart Phones",
+                "/image/1/iphonexfrontback-800x573.jpg");
         Product iPhone8 = new Product(9999, 799.0, "64GB, iOS 11, Silver",
-            "iPhone 8", "Apple",
-            "/image/2/iphone8-silver-select-2017.jpg", "Smart Phones");
+                "iPhone 8", "Apple", "Smart Phones",
+                "/image/2/iphone8-silver-select-2017.jpg");
         Product C7OLED = new Product(9999, 3000.00, "65\" Smart TV",
-            "C7 OLED", "LG",
-            "/image/3/C7_ST_Desktop_Front.jpg", "Televisions");
+                "C7 OLED", "LG", "Televisions",
+                "/image/3/C7_ST_Desktop_Front.jpg");
         Product MacbookPro = new Product(15000, 2800.00, "15\" laptop, 512GB SSD",
-            "Macbook Pro", "Apple",
-            "/image/4/apple_mlh32ll_a_15_4_macbook_pro_with_1293726.jpg", "Computers");
+                "Macbook Pro", "Apple", "Computers",
+                "/image/4/apple_mlh32ll_a_15_4_macbook_pro_with_1293726.jpg");
         productService.save(iPhoneX);
         productService.save(iPhone8);
         productService.save(C7OLED);
@@ -66,8 +70,8 @@ public class MainController {
                          @RequestParam(required = false) String brand,
                          Model model) {
         List<Product> filtered = productService.findByBrandAndOrCategory(brand, category);
-        model.addAttribute("filtered", filtered);
-        return "filter";
+        model.addAttribute("products", filtered); // Overrides the @ModelAttribute above.
+        return "main";
     }
 
     @GetMapping("/about")
