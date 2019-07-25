@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -32,11 +34,13 @@ public class CartController {
 		return user.getCart();
 	}
 	
-//	@ModelAttribute("cartSize")
-//	public int cartSize() {
-//		if(cart() == null) return 0;
-//		return cart().values().stream().mapToInt(i -> i).sum(); // Java, ytho
-//	}
+	/**
+	 * Puts an empty list in the model that thymeleaf can use to sum up the cart total.
+	 */
+	@ModelAttribute("list")
+	public List<Double> list() {
+		return new ArrayList<>();
+	}
 	
 	@GetMapping("/cart")
 	public String showCart() {
