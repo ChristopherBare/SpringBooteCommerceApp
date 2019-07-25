@@ -19,16 +19,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="item : ${cart}" th:with="product=${productService.findById(item.key)}">
+                    <tr th:each="item : ${cart}" th:with="product=${item.key}">
                         <td style="width: 10%;"><img th:src="${product.image}" style="width: 100%; max-height: 80px"/></td>
                         <td th:text="${product.name}"></td>
                         <td>
                             <input type="hidden" name="id" th:value="${product.id}" form="updateForm" />
                             <input type="number" name="quantity" min="0" th:value="${item.value}" form="updateForm" />
                         </td>
-                        <td>
-                            <span th:text="${#numbers.formatCurrency(product.price * item.value)}"></span>
-                        </td>
+                        <td th:if="${list.add(product.price * item.value)}" th:text="${#numbers.formatCurrency(product.price * item.value)}"></td>
                         <td>
                             <form th:action="@{/cart}" method="post" style="display: inline">
                                 <input type="hidden" name="_method" value="DELETE" />
@@ -38,12 +36,21 @@
                         </td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td>Total</td>
+                        <td></td>
+                        <td th:text="${#numbers.formatCurrency(#aggregates.sum(list))}"></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
 
-            <form th:action="@{/cart}" method="post" id="updateForm">
+            <form th:action="@{/cart}" method="post" id="updateForm" th:if="${cart.size() > 0}">
                 <!-- form doesn't support PATCH requests, but this tells Spring Boot to use @PatchMapping anyway. -->
                 <input type="hidden" name="_method" value="PATCH" />
-                <button type="submit" class="btn btn-primary" th:if="${cart.size() > 0}">Update Cart</button>
+                <button type="submit" class="btn btn-primary">Update Cart</button>
             </form>
             <div th:if="${cart.size() == 0}">Nothing in your cart yet.</div>
         </div>

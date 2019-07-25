@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +28,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers("/cart").authenticated()
-			.and().formLogin().loginPage("/login").defaultSuccessUrl("/cart");
+			.and().formLogin()
+				.loginPage("/signin")
+				.loginProcessingUrl("/login")
+			.and().logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
+				.logoutSuccessUrl("/");
 	}
 }

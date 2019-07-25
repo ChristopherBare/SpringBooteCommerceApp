@@ -7,8 +7,8 @@
 
 <main role="main">
     <div class="container">
-        <form class="form-signin" th:action="@{/login}" method="post">
-            <h2 class="form-signin-heading" style="text-align: center">Please Log in</h2>
+        <form class="form-signin" th:action="@{/signin}" method="post">
+            <h2 class="form-signin-heading" style="text-align: center">Please Sign In/Up</h2>
             <p>
                 <label for="username" class="sr-only">Username</label>
                 <input type="text" id="username" name="username" class="form-control" placeholder="Username">
@@ -17,8 +17,10 @@
                 <label for="password" class="sr-only">Password</label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="Password">
             </p>
-            <input name="_csrf" type="hidden" value="f590da85-2a87-478c-b27b-a3e74f81593f">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+            <div style="display: flex; justify-content: space-between">
+                <button class="btn btn-lg btn-primary" name="submit" value="in" type="submit" style="flex-grow: 0.95">Sign In</button>
+                <button class="btn btn-lg btn-success" name="submit" value="up" type="submit">Sign Up</button>
+            </div>
         </form>
     </div>
 </main>

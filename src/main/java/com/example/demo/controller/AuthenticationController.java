@@ -5,9 +5,14 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -15,23 +20,26 @@ class AuthenticationController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/login")
+	@GetMapping("/signin")
 	public String login() {
-		return "login";
+		return "signin";
 	}
 	
-	@GetMapping("/signup")
-	public String signup(Model model) {
-		model.addAttribute("user", new User());
-		return "registration";
-	}
-	
-	@PostMapping("/signup")
-	public String singup(@Valid User user) {
-		if(userService.findByUsername(user.getUsername()) != null) {
-			return "registration";
+	@PostMapping("/signin")
+	public String singup(@Valid User user,
+	                     @RequestParam String submit,
+	                     BindingResult bindingResult,
+	                     HttpServletRequest request) throws ServletException {
+		String password = user.getPassword();
+		if(submit.equals("up")) {
+			if(userService.findByUsername(user.getUsername()) == null) {
+				userService.saveNew(user);
+			} else {
+				bindingResult.rejectValue("username", "error.user", "Username is already taken.");
+				return "signin";
+			}
 		}
-		userService.saveNew(user);
-		return "redirect:/cart";
+		request.login(user.getUsername(), password);
+		return "redirect:/";
 	}
 }

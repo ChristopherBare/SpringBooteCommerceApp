@@ -20,9 +20,6 @@ import java.util.List;
 public class MainController {
     @Autowired
     ProductService productService;
-    
-    @Autowired
-    CartController cartController;
 
     @GetMapping("/")
     public String main() {

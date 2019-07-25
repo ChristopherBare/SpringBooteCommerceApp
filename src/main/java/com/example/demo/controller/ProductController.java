@@ -15,11 +15,6 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/product")
-    public List<Product> index() {
-        return productService.findAll();
-    }
-
     @GetMapping("/product/{id}")
     public String show(@PathVariable int id, Model model) {
         Product product = productService.findById(id);

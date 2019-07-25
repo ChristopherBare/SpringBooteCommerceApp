@@ -1,15 +1,19 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Product;
+import com.example.demo.model.User;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
+@ControllerAdvice
 public class CartController {
 	@Autowired
 	ProductService productService;
@@ -17,14 +21,25 @@ public class CartController {
 	@Autowired
 	UserService userService;
 	
-	@ModelAttribute("cart")
-	public Map<Product, Integer> cart() {
-		return userService.getLoggedInUser().getCart();
+	@ModelAttribute("loggedInUser")
+	public User loggedInUser() {
+		return userService.getLoggedInUser();
 	}
 	
-	@ModelAttribute("productService")
-	public ProductService productService() {
-		return productService;
+	@ModelAttribute("cart")
+	public Map<Product, Integer> cart() {
+		User user = loggedInUser();
+		if(user == null) return null;
+		System.out.println("Getting cart");
+		return user.getCart();
+	}
+	
+	/**
+	 * Puts an empty list in the model that thymeleaf can use to sum up the cart total.
+	 */
+	@ModelAttribute("list")
+	public List<Double> list() {
+		return new ArrayList<>();
 	}
 	
 	@GetMapping("/cart")
