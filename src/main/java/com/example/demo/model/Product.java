@@ -20,6 +20,5 @@ public class Product {
     @NonNull private int quantity;
     @NonNull private double price;
     @NonNull private String description, name, brand, category, image;
-    
-    private int rating;
+
 }

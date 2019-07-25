@@ -265,9 +265,67 @@ public class Product {
         this.image = image;
         this.category = new Category(categoryName);
     }
-
-
 }
 ```
+#*Outline*
+### Day 1
 
+- Scrum Intro
+- Planning Meeting
+    - User Story
+    - Agile
+
+*__Lunch__*
+- Set up Project
+    - Layout all the dependencies
+- Set up all the HTML pages
+- Make the main controller
+- Do a Retrospective
+
+
+*__HomeWork:__*
+- Do JUnit Testing
+    - Some will fail  
+
+##Day 2
+
+- Do a StandUp
+- Review HomeWork
+- Planning Meeting
+
+*__First Break__*
+- Set up Data Base
+    - Models
+    - Repo
+    - Services
+- Set up User Authentication
+- Do the login page logic
+- Do the user cart logic
+
+*__Lunch__*
+- Set up Dynamic Products
+- Link all the HTML pages together
+- Do Retrospective
+
+*__HomeWork:__*
+- Do JUnit testing
+- Do integration & regression testing
+
+## Day 3
+
+- Stand Up
+- Review Homework
+- Planning Meeting
+
+*__First Break__*
+
+- Adding the buttons and filtering logic to the navbar 
+- Adding a numbering logic to the cart in the navbar
+
+*__Lunch__*
+
+- Discuss style guide
+- Finalize Project
+    - Full test of the entire site
+- Demo Projects    
 
