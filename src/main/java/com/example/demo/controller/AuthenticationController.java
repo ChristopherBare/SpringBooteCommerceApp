@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -15,23 +17,18 @@ class AuthenticationController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/login")
+	@GetMapping("/signin")
 	public String login() {
-		return "login";
+		return "signin";
 	}
 	
-	@GetMapping("/signup")
-	public String signup(Model model) {
-		model.addAttribute("user", new User());
-		return "registration";
-	}
-	
-	@PostMapping("/signup")
-	public String singup(@Valid User user) {
-		if(userService.findByUsername(user.getUsername()) != null) {
-			return "registration";
+	@PostMapping("/signin")
+	public String singup(@Valid User user, HttpServletRequest request) throws ServletException {
+		String password = user.getPassword();
+		if(userService.findByUsername(user.getUsername()) == null) {
+			userService.saveNew(user);
 		}
-		userService.saveNew(user);
-		return "redirect:/cart";
+		request.login(user.getUsername(), password);
+		return "redirect:/";
 	}
 }
