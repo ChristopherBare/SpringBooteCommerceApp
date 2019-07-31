@@ -57,6 +57,17 @@
   </html>
 
 ```
+## Task: 
+
+-- Hard code this part --
+Display a list of products using bootstrap cards on the main page. 
+- They can be ordered any way you want.
+- They should have:
+    - Picture (included in support files)
+    - Name
+    - Description
+    - Price
+
 ### cart
 
 ```html
