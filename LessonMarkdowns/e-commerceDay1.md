@@ -322,13 +322,75 @@ This is the about page.
 </body>
 </html>
 ```
-- Make the main controller
-   - Route to the main page at:
-        - "/"
-        - "/products"
-        - "/signin"
-        - "cart"
-        - "/about"
+- Make the MainController
+   ```java
+     @Data
+     @Controller
+     @ControllerAdvice // This makes the `@ModelAttribute`s of this controller available to all controllers, for the navbar.
+     public class MainController {
+         @Autowired
+         ProductService productService;
+     
+         @GetMapping("/")
+         public String main() {
+             return "main";
+         }
+     
+         @ModelAttribute("products")
+         public List<Product> products() {
+             return productService.findAll();
+         }
+     
+         @ModelAttribute("categories")
+         public List<String> categories() {
+             return productService.findDistinctCategories();
+         }
+     
+         @ModelAttribute("brands")
+         public List<String> brands() {
+             return productService.findDistinctBrands();
+         }
+     
+         @GetMapping("/filter")
+         public String filter(@RequestParam(required = false) String category,
+                              @RequestParam(required = false) String brand,
+                              Model model) {
+             List<Product> filtered = productService.findByBrandAndOrCategory(brand, category);
+             model.addAttribute("products", filtered); // Overrides the @ModelAttribute above.
+             return "main";
+         }
+     
+         @GetMapping("/about")
+         public String about() {
+             return "about";
+         }
+     }
+
+   ```
+  - ProductController
+    ```java
+        @Controller
+        public class ProductController {
+            @Autowired
+            ProductService productService;
+        
+            @GetMapping("/product/{id}")
+            public String show(@PathVariable int id, Model model) {
+                Product product = productService.findById(id);
+                model.addAttribute(product);
+                return "product";
+            }
+        
+            // TODO: Either implement admin controls or remove these methods.
+        
+            @RequestMapping(value = "/product", method = {RequestMethod.POST, RequestMethod.PUT})
+            public String createOrUpdate(@Valid Product product) {
+                productService.save(product);
+                return "redirect:/product/" + product.getId();
+            }
+        }
+
+    ```
    
 # Retrospective
    - What did we learn
@@ -345,5 +407,7 @@ This is the about page.
         - "/signin"
         - "cart"
         - "/about"
+        - "/filter?brand=LG"
+        - "/filter?category=Microsoft"
     - Some tests will fail, that's fine. 
       
