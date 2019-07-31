@@ -25,7 +25,7 @@ Spring Boot makes it easy to create stand-alone, production-grade Spring based A
 
 ![img](https://i.stack.imgur.com/R1ktG.gif)
 
-## Creating a springboot project
+## Creating the Project
 
 Steps to recreate:
  - Open IntelliJ's new Project pane
