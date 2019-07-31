@@ -323,7 +323,12 @@ This is the about page.
 </html>
 ```
 - Make the main controller
-   - Route to the main page at "/"
+   - Route to the main page at:
+        - "/"
+        - "/products"
+        - "/signin"
+        - "cart"
+        - "/about"
    
 # Retrospective
    - What did we learn
@@ -334,4 +339,11 @@ This is the about page.
 
 ## *__Homework:__*
 - Do JUnit Testing
-    - Some tests will fail  
+    - Test the routing for:
+        - "/"
+        - "/products"
+        - "/signin"
+        - "cart"
+        - "/about"
+    - Some tests will fail, that's fine. 
+      
