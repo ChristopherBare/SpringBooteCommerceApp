@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.configuration.WebMvcConfiguration;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.service.ProductService;
@@ -10,12 +11,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import javax.servlet.http.HttpServletRequest;
 
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.Matchers.hasItem;
@@ -25,7 +31,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@WebMvcTest(MainController.class)
+@ContextConfiguration(classes = {MainController.class, WebMvcConfiguration.class})
 @WebAppConfiguration
 @AutoConfigureMockMvc
 public class MainControllerTest {
@@ -33,10 +40,11 @@ public class MainControllerTest {
 	private WebApplicationContext context;
 	@Autowired
 	private MockMvc mvc;
-	@Autowired
+	@MockBean
 	ProductService productService;
-	@Autowired
+	@MockBean
 	UserService userService;
+
 	@Before
 	public void setUp() throws Exception {
 		Product iPhoneX = new Product(9999, 999.0, "64GB, iOS 11, space gray",
@@ -55,9 +63,17 @@ public class MainControllerTest {
 		productService.save(iPhone8);
 		productService.save(C7OLED);
 		productService.save(MacbookPro);
-		User user = new User();
-		userService.saveNew(user);
 		mvc = MockMvcBuilders.webAppContextSetup(context).build();
+
+		// TODO: maybe use this for Cart
+//		mvc.perform(post("/signin").contentType("application/JSON").content(
+//				"{" +
+//						"\"username\": \"user\"," +
+//						"\"password\": \"password\"," +
+//						"\"submit\": \"up\"" +
+//				"}"
+//
+//		));
 	}
 
 	@Test

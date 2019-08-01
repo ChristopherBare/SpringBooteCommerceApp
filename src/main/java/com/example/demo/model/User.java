@@ -3,6 +3,7 @@ package com.example.demo.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class User implements UserDetails {
 	@GeneratedValue
@@ -21,7 +23,7 @@ public class User implements UserDetails {
 	
 	@NonNull
 	private String username, password;
-	
+
 	// TODO: Maybe don't do this until we're making the CartController
 	@ElementCollection
 	Map<Product, Integer> cart = new HashMap<>();
@@ -39,4 +41,5 @@ public class User implements UserDetails {
 	private boolean enabled = true;
 	@Transient
 	private Collection<GrantedAuthority> authorities = null;
+
 }

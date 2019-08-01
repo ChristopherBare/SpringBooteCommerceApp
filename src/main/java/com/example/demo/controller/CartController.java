@@ -20,12 +20,12 @@ public class CartController {
 	
 	@Autowired
 	UserService userService;
-	
+
 	@ModelAttribute("loggedInUser")
 	public User loggedInUser() {
 		return userService.getLoggedInUser();
 	}
-	
+
 	@ModelAttribute("cart")
 	public Map<Product, Integer> cart() {
 		User user = loggedInUser();
