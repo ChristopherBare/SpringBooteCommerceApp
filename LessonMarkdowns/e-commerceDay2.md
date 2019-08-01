@@ -12,12 +12,13 @@
 - Which tests failed?
     - Why?
 
+### *__First Break__*
+
 ## Planning Meeting
 
 - What are we going to accomplish on day 2?
     - Create strategy for what will be done and how. 
 
-### *__First Break__*
 
 ## Work on it
 
@@ -183,6 +184,10 @@
       }
 
     ```
+
+
+### *__Lunch__*
+
 ## Cart
 - CartController
     ```java
@@ -256,12 +261,15 @@
 
     ```
 
-
-### *__Lunch__*
-
+## Dynamic Products List
 
 - Set up Dynamic Products
+    - In the main.html file, make the static list of products pull from the database and list them out with just a single block. Rather than having 4 cards. 
+    
+## Finish all extraneous routing
 - Link all the HTML pages together
+    - Put in the appropriate links for the pages to work together.
+    - Use the test files to help you determine that all routes work.
 
 
 
