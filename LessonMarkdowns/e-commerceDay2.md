@@ -24,22 +24,13 @@
 - Set up Database
     - Models
         - User
+            - Create a user model with the following items:
+                            - auto generated id
+                            - Strings for username and password (they can't be null)
+                            - a Map that uses Product and Integer pairs. called "cart" that is implemented by a HashMap
+                                - Use the `@ElementCollection` tag: It basically makes the map into a table with a fk to a Product and the quantity as a number without making a new model. Very similar to @OneToMany
+            - This goes at the bottom of the model. 
             ```java
-              @Data
-              @NoArgsConstructor
-              @Entity
-              public class User implements UserDetails {
-              	@GeneratedValue
-              	@Id private long id;
-              	
-              	@NonNull
-              	private String username, password;
-              	
-              	// TODO: Maybe don't do this until we're making the CartController
-              	@ElementCollection
-              	Map<Product, Integer> cart = new HashMap<>();
-              	
-              
               	// UserDetails requires these, they are technically getters (is-ers?) overridden by Lombok.
               	// @Transient Makes it so these aren't persisted in the database, as they are hard coded.
               	@Transient
@@ -52,35 +43,20 @@
               	private boolean enabled = true;
               	@Transient
               	private Collection<GrantedAuthority> authorities = null;
-              }
-
 
             ```
+            
         - Product
-            ```java
-              import lombok.*;
-              
-              import javax.persistence.Entity;
-              import javax.persistence.GeneratedValue;
-              import javax.persistence.GenerationType;
-              import javax.persistence.Id;
-              
-              @AllArgsConstructor
-              @NoArgsConstructor
-              @RequiredArgsConstructor
-              @Entity
-              @Data
-              public class Product {
-                  @Id
-                  @GeneratedValue(strategy = GenerationType.IDENTITY)
-                  private long id;
-              
-                  @NonNull private int quantity;
-                  @NonNull private double price;
-                  @NonNull private String description, name, brand, category, image;
-              }
-
-            ```
+            - Create a product model with the following items:
+                - id that auto increments. 
+                - int quantity
+                - price
+                - Strings for 
+                    - description
+                    - name
+                    - brand
+                    - category
+                    - image (url)
     - Repo
         - ProductRepository
             ```java
