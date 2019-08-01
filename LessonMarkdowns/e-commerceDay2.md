@@ -7,18 +7,17 @@
 - What were your challenges
 - Any impediments 
 
-## Review Homework
-
-- Which tests failed?
-    - Why?
-
-### *__First Break__*
-
 ## Planning Meeting
 
 - What are we going to accomplish on day 2?
     - Create strategy for what will be done and how. 
 
+### *__First Break__*
+
+## Review Homework
+
+- Which tests failed?
+    - Why?
 
 ## Work on it
 
@@ -185,7 +184,6 @@
 
     ```
 
-
 ### *__Lunch__*
 
 ## Cart
@@ -270,8 +268,6 @@
 - Link all the HTML pages together
     - Put in the appropriate links for the pages to work together.
     - Use the test files to help you determine that all routes work.
-
-
 
 # Retrospective
    - What did we learn
