@@ -85,6 +85,91 @@
 
             ```
     - Services
+        -UserService
+            ```java
+                @Service
+                public class UserService implements UserDetailsService {
+                	@Autowired
+                	private UserRepository userRepository;
+                	@Autowired
+                	private BCryptPasswordEncoder bCryptPasswordEncoder;
+                	
+                	public User findByUsername(String username) {
+                		return userRepository.findByUsername(username);
+                	}
+                	
+                	public void saveNew(User user) {
+                		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                		userRepository.save(user);
+                	}
+                	
+                	public void saveExisting(User user) {
+                		userRepository.save(user);
+                	}
+                	
+                	public User getLoggedInUser() {
+                		return findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+                	}
+                	
+                	public void updateCart(Map<Product, Integer> cart) {
+                		User user = getLoggedInUser();
+                		user.setCart(cart);
+                		saveExisting(user);
+                	}
+                	
+                	@Override
+                	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                		User user = findByUsername(username);
+                		if(user == null) throw new UsernameNotFoundException("Username not found.");
+                		return user;
+                	}
+                }
+
+            ```
+            
+        - ProductService
+            ```java
+              @Service
+              public class ProductService {
+                  @Autowired
+                  private ProductRepository productRepository;
+                  
+                  public List<Product> findAll() {
+                      return productRepository.findAll();
+                  }
+              
+                  public Product findById(long id) {
+                      return productRepository.findById(id);
+                  }
+                  
+                  public List<String> findDistinctBrands() {
+                      return productRepository.findDistinctBrands();
+                  }
+                  
+                  public List<String> findDistinctCategories() {
+                      return productRepository.findDistinctCategories();
+                  }
+                  
+                  public void save(Product product) {
+                      productRepository.save(product);
+                  }
+                  
+                  public void deleteById(long id) {
+                      productRepository.deleteById(id);
+                  }
+                  
+                  public List<Product> findByBrandAndOrCategory(String brand, String category) {
+                      if(category == null && brand == null)
+                          return productRepository.findAll();
+                      else if(category == null)
+                          return productRepository.findByBrand(brand);
+                      else if(brand == null)
+                          return  productRepository.findByCategory(category);
+                      else
+                          return productRepository.findByBrandAndCategory(brand, category);
+                  }
+              }
+            ```
 - Set up User Authentication
     - SecurityConfiguration
         ```java
