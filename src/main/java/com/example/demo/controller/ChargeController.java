@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.ChargeRequest;
 import com.example.demo.service.StripeService;
+import com.example.demo.service.UserService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class ChargeController {
 	@Autowired
 	private StripeService paymentsService;
 
+	@Autowired
+	private UserService userService;
+
 	@PostMapping("/charge")
 	public String charge(ChargeRequest chargeRequest, Model model)
 			throws StripeException {
@@ -26,6 +30,8 @@ public class ChargeController {
 		model.addAttribute("status", charge.getStatus());
 		model.addAttribute("chargeId", charge.getId());
 		model.addAttribute("balance_transaction", charge.getBalanceTransaction());
+		userService.getLoggedInUser().getCart().clear();
+		userService.updateCart(userService.getLoggedInUser().getCart());
 		return "result";
 	}
 

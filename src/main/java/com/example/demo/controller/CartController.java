@@ -1,11 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.ChargeRequest;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,6 +23,9 @@ public class CartController {
 	
 	@Autowired
 	UserService userService;
+
+	@Value("${STRIPE_PUBLIC_KEY}")
+	private String stripePublicKey;
 
 	@ModelAttribute("loggedInUser")
 	public User loggedInUser() {
@@ -41,9 +47,16 @@ public class CartController {
 	public List<Double> list() {
 		return new ArrayList<>();
 	}
+
+
 	
 	@GetMapping("/cart")
-	public String showCart() {
+	public String showCart(Model model) {
+		double total = 0;
+		for(Map.Entry<Product, Integer> e : cart ().entrySet()) total += e.getKey().getPrice() * e.getValue();
+		model.addAttribute("amount", (long) total * 100); // in cents
+		model.addAttribute("stripePublicKey", stripePublicKey);
+		model.addAttribute("currency", ChargeRequest.Currency.USD);
 		return "cart";
 	}
 	
