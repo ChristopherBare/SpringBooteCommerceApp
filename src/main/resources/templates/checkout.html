@@ -4,14 +4,27 @@
     <title>Result</title>
 </head>
 <body>
-<h3 th:if='${error}' th:text='${error}' style='color: red;'></h3>
-<div th:unless='${error}'>
-    <h3 style='color: green;'>Success!</h3>
-    <div>Id.: <span th:text='${id}' /></div>
-    <div>Status: <span th:text='${status}' /></div>
-    <div>Charge id.: <span th:text='${chargeId}' /></div>
-    <div>Balance transaction id.: <span th:text='${balance_transaction}' /></div>
-</div>
-<a href='/checkout.html'>Checkout again</a>
+
+
+<form th:action='@{/charge}' method='POST' id='checkout-form'>
+    <input type='hidden' th:value='${amount}' name='amount' />
+    <label>Price:<span th:text='${amount/100}' /></label>
+    <!-- NOTE: data-key/data-amount/data-currency will be rendered by Thymeleaf -->
+    <script
+            src='https://checkout.stripe.com/checkout.js'
+            class='stripe-button'
+            th:attr='data-key=${stripePublicKey},
+                 data-amount=${amount},
+                 data-currency=${currency}'
+            data-name='Baeldung'
+            data-description='Spring course checkout'
+            data-image
+                    ='http://www.baeldung.com/wp-content/themes/baeldung/favicon/android-chrome-192x192.png'
+            data-locale='auto'
+            data-zip-code='false'>
+    </script>
+</form>
+
+<a class="btn btn-primary" href='/'>Go back home</a>
 </body>
 </html>

@@ -17,13 +17,14 @@ import java.util.Map;
 @Service
 public class StripeService {
 
-	@Value("${STRIPE_PUBLIC_KEY}")
+	@Value("${STRIPE_SECRET_KEY}")
 	private String secretKey;
 
 	@PostConstruct
 	public void init() {
 		Stripe.apiKey = secretKey;
 	}
+
 	public Charge charge(ChargeRequest chargeRequest)
 			throws StripeException
 //			,APIConnectionException, APIException
