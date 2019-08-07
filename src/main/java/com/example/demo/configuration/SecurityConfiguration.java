@@ -28,11 +28,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers("/cart").authenticated()
+				.antMatchers("/console/**").permitAll()
 			.and().formLogin()
 				.loginPage("/signin")
 				.loginProcessingUrl("/login")
 			.and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
-				.logoutSuccessUrl("/");
+				.logoutSuccessUrl("/")
+			.and().headers().frameOptions().disable()
+			.and().csrf().disable();
 	}
 }

@@ -24,7 +24,7 @@ https://www.baeldung.com/java-stripe-api
     ```
 
 ## How to set environment variables in IntelliJ
-​
+
 * Open the dropdown left of the run button and click `Edit configurations...`
 ![](https://i.imgur.com/BI1sIv6.png)
 * Make sure your eCommerce application is selected on the left.
@@ -46,7 +46,7 @@ https://www.baeldung.com/java-stripe-api
         //put this at the end of the post request just before the return.
         userService.getLoggedInUser().getCart().clear();
     ```
-    
+
 - Follow the guide in the link above to implement Stripe API with your site
     - Test that it works with the fake card: 4242 4242 4242 4242 exp: 01/20 CVC: 111
 

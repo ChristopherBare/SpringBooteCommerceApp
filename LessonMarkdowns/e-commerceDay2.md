@@ -19,7 +19,8 @@
                             - auto generated id
                             - Strings for username and password (they can't be null)
                             - a Map that uses Product and Integer pairs. called "cart" that is implemented by a HashMap
-                                - Use the `@ElementCollection` tag: It basically makes the map into a table with a Foreign Key to a Product and the quantity as a number without making a new model. Very similar to @OneToMany
+                                - Use the `@ElementCollection` tag: It basically makes the map into a table with a Foreign Key to a Product and the quantity as a 
+                                number without making a new model. Very similar to @OneToMany
             - This goes at the bottom of the model. 
             - Extend the `UserDetails` class from Spring Security.
             ```java

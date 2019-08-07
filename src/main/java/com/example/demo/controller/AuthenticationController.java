@@ -39,7 +39,11 @@ class AuthenticationController {
 				return "signin";
 			}
 		}
-		request.login(user.getUsername(), password);
+		try {
+			request.login(user.getUsername(), password);
+		} catch(Exception e) {
+			return "signin";
+		}
 		return "redirect:/";
 	}
 }

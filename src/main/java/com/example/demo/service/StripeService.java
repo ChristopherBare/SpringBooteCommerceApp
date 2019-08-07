@@ -2,14 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.model.ChargeRequest;
 import com.stripe.Stripe;
-import com.stripe.exception.AuthenticationException;
-import com.stripe.exception.CardException;
-import com.stripe.exception.InvalidRequestException;
-import com.stripe.exception.StripeException;
+import com.stripe.exception.*;
 import com.stripe.model.Charge;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +22,7 @@ public class StripeService {
 	}
 
 	public Charge charge(ChargeRequest chargeRequest)
-			throws StripeException
-//			,APIConnectionException, APIException
-	{
+			throws StripeException {
 		Map<String, Object> chargeParams = new HashMap<>();
 		chargeParams.put("amount", chargeRequest.getAmount());
 		chargeParams.put("currency", chargeRequest.getCurrency());
